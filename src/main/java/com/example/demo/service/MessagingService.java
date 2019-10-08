@@ -28,11 +28,12 @@ public class MessagingService {
             // Create a publisher instance with default settings bound to the topic
             publisher = Publisher.newBuilder(topicName).build();
 
-            String msg = "{timestamp: '1970-01-01T00:00:00Z', " +
-                    "kind: " + notif.getKind()  + ","+
-                    "token: 'JBI#(Y&$^(@B@'" +
-                    "triggered_by: 'Braintree Webhook'" +
-                    "}";
+            String msg = "{" +
+                            "timestamp: '1970-01-01T00:00:00Z', " +
+                            "kind: '" + notif.getKind()  + "',"+
+                            "token: 'JBI#(Y&$^(@B@'," +
+                            "triggered_by: 'Braintree Webhook'" +
+                        "}";
 
             System.out.println("Posting message to topic : "  + msg);
             List<String> messages = Arrays.asList(msg);
@@ -57,7 +58,8 @@ public class MessagingService {
                                     System.out.println(apiException.getStatusCode().getCode());
                                     System.out.println(apiException.isRetryable());
                                 }
-                                System.out.println("Error publishing message : " + message);
+                                System.out.println("Error publishing message : " + message + ":" + throwable.getMessage());
+                                //throwable.printStackTrace();
                             }
 
                             @Override
